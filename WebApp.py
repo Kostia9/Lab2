@@ -15,7 +15,7 @@ def CreateDataFrame(path):
     all_files = [i for i in os.listdir(path) if i.endswith('csv')]
     dataFrames = []
     for filename in all_files:
-         df = pd.read_csv(filename, header=1, names=headers)
+         df = pd.read_csv(fr'{path}\{filename}', header=1, names=headers)
          df = df.drop(df.loc[df['VHI'] == -1].index)
          i = int(filename.split('_')[2].split()[0])
          df['area'] = i
@@ -28,8 +28,6 @@ def CreateDataFrame(path):
     dataFrame['Year'][(dataFrame['Year'] == '<tt><pre>1982')] = '1982'
     dataFrame['Week'] = dataFrame['Week'].astype(int)
     return dataFrame
-
-
 
 class StockExample(server.App):
     title = "Historical Stock Prices"
